@@ -11,6 +11,7 @@ using namespace std;
 class Engine
 {
 private: // Private properties.
+	bool m_running;
 	bool m_bRunning; // Loop control flag.
 	const Uint8* m_iKeystates; // Keyboard state container.
 	Uint32 m_start, m_end, m_delta, m_fps; // Fixed timestep variables.
@@ -33,6 +34,7 @@ public: // Public methods.
 	~Engine();
 	int Run();
 	static Engine& Instance(); // This static method creates the static instance that can be accessed 'globally'
+	bool& Running();
 	bool KeyDown(SDL_Scancode c);
 	SDL_Renderer* GetRenderer();
 };

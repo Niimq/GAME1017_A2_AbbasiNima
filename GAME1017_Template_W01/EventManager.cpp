@@ -15,7 +15,7 @@ void EventManager::Init()
 
 void EventManager::HandleEvents()
 {
-	//SDL_Event event;
+	SDL_Event event;
 
 	std::memcpy(s_keysLast, s_keysCurr, s_numKeys);
 	s_mouseLast = s_mouseCurr;

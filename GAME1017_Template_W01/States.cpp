@@ -4,10 +4,8 @@
 #include "Engine.h"
 #include "EventManager.h"
 #include "CollisionManager.h"
-#include "SoundManager.h"
 #include "Primitives.h"
 #include "Button3.h"
-#include "AsteroidSprites.h"
 #include "Engine.h"
 
 #include <iostream>
@@ -49,19 +47,7 @@ TitleState::TitleState(){}
 
 void TitleState::Enter()
 {
-	TEMA::Load("Img/Title.png", "title");
-	TEMA::Load("Img/button.png", "play");
-	TEMA::Load("Img/TitleBack.jpg", "bg");
-	SOMA::Load("Aud/Title.mp3", "title", SOUND_MUSIC);
-	m_objects.push_back(pair<string, GameObject*>("bg",
-		new Image({ 0, 0, 1920, 1200 }, { 0, 0, 1024, 768 }, "bg")));
-	m_objects.push_back(pair<string, GameObject*>("title",
-		new Image({ 0, 0, 800, 156 }, { 112, 100, 800, 156 }, "title")));
-	m_objects.push_back(pair<string, GameObject*>("play",
-		new PlayButton({ 0, 0, 400, 100 }, { 412, 384, 200, 50 }, "play")));
-	SOMA::AllocateChannels(16);
-	SOMA::SetMusicVolume(32);
-	SOMA::PlayMusic("title", -1, 2000);
+
 }
 
 void TitleState::Update()
@@ -87,8 +73,6 @@ void TitleState::Exit()
 	TEMA::Unload("title");
 	TEMA::Unload("play");
 	TEMA::Unload("bg");
-	SOMA::StopMusic();
-	SOMA::Unload("title", SOUND_MUSIC);
 	for (auto& i : m_objects)
 	{
 		delete i.second;
@@ -103,21 +87,6 @@ GameState::GameState(){}
 void GameState::Enter() // Used for initialization.
 {
 	TEMA::Load("Img/background.png", "bg");
-	TEMA::Load("Img/Sprites.png", "sprites");
-	SOMA::Load("Aud/Engines.wav", "engines", SOUND_SFX);
-	SOMA::Load("Aud/Fire.wav", "fire", SOUND_SFX);
-	SOMA::Load("Aud/Explode.wav", "explode", SOUND_SFX);
-	SOMA::Load("Aud/Wings.mp3", "wings", SOUND_MUSIC);
-	//SOMA::Load("Aud/Danger.mp3", "danger", SOUND_MUSIC); // Alternate music track.
-	m_objects.push_back(pair<string, GameObject*>("bg",
-		new Image({ 0, 0, 1024, 768 }, { 0, 0, 1024, 768 }, "bg")));
-	m_objects.push_back(pair<string, GameObject*>("astf",
-		new AsteroidField(24)));
-	m_objects.push_back(pair<string, GameObject*>("ship",
-		new ShipAsteroids({ 0, 0, 100, 100 }, { 462.0f, 334.0f, 100.0f, 100.0f })));
-	SOMA::SetSoundVolume(16);
-	SOMA::SetMusicVolume(32);
-	SOMA::PlayMusic("wings", -1, 2000);
 	//SOMA::PlayMusic("danger", -1, 2000); // Alternate music track.
 }
 
@@ -158,12 +127,7 @@ void GameState::Exit()
 {
 	TEMA::Unload("bg");
 	TEMA::Unload("sprites");
-	SOMA::StopSound();
-	SOMA::StopMusic();
-	SOMA::Unload("engines", SOUND_SFX);
-	SOMA::Unload("fire", SOUND_SFX);
-	SOMA::Unload("explode", SOUND_SFX);
-	SOMA::Unload("wings", SOUND_MUSIC);
+
 	for (auto& i : m_objects)
 	{
 		delete i.second; // De-allocating GameObject*s

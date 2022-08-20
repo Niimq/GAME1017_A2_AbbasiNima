@@ -167,6 +167,8 @@ int Engine::Run()
 	return 0;
 }
 
+bool& Engine::Running() { return m_running; } // Getter.
+
 Engine& Engine::Instance()
 {
 	static Engine instance; // C++11 will prevent this line from running more than once. Magic statics.
